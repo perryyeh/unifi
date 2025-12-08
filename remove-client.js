@@ -78,14 +78,14 @@ document.head.appendChild(script);
 
         console.log("✅ 即将删除以下设备：", macs);
 
-        // ===== 下面继续沿用你现有的“第 3 段：构建并发起删除请求”即可 =====
-
     } catch (e) {
+
+    }
+
+    if (macs.length === 0) {
         console.error("❌ 提取合法 MAC 地址失败：", e);
         return;
     }
-
-    console.log("✅ 即将删除以下设备：", macs);
 
     // ========== 3. 构建并发起删除请求 ==========
     
