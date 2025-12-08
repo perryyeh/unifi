@@ -44,10 +44,14 @@
         const macRegex = /^([0-9a-f]{2}:){5}[0-9a-f]{2}$/i;
         // 型号片段允许出现在 display_name 任意位置，覆盖 ADA-AL00U / ALT-AL10E / ALN-AL00 0a:9c 等
         const modelInTextRegex = /\b[A-Z]{3}-[A-Z0-9]{4,6}\b/i;
+        // 苹果项目前缀（排除） 例如 ye-iPhone16、xx-iPad12
+        const appleLikeRegex = /\b\w*-?i(phone|pad|pod)[0-9]*\b/i;
 
         macs = list
             .filter(it => {
                 const dn = String(it.display_name || "").trim();
+                // ② 包含苹果样式名称 → 排除
+                if (appleLikeRegex.test(dn)) return false;
                 return macRegex.test(dn) || modelInTextRegex.test(dn);
             })
             .map(it => String(it.mac || it.id || "").toLowerCase())
